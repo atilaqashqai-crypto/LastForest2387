@@ -1,0 +1,9 @@
+v35 - online fixes
+==================
+- Online: your own name is no longer shown above your own head (other players still see it).
+- Online: zombies were invisible. Cause: the terrain collision is only loaded around players
+  (about 70 m), but zombies stayed awake up to 90 m away. Zombies outside the loaded ground fell
+  through the world before any player reached them. Now a zombie waits (frozen) until the ground
+  under it is loaded, and a zombie that somehow ends up below the ground is put back on top.
+  (terrain.gd: has_ground(), zombie.gd: _ground_ok())
+- Zip name now has the version number: LastForest_v35.zip (+1 each update).

@@ -1,0 +1,51 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://wood_log.gd" id="1_log"]
+
+[sub_resource type="CylinderShape3D" id="LogCollision"]
+radius = 0.22
+height = 1.65
+
+[sub_resource type="CylinderMesh" id="LogMesh"]
+top_radius = 0.22
+bottom_radius = 0.22
+height = 1.65
+radial_segments = 10
+
+[sub_resource type="StandardMaterial3D" id="Bark"]
+albedo_color = Color(0.24, 0.13, 0.065, 1)
+roughness = 0.95
+
+[sub_resource type="CylinderMesh" id="CutFace"]
+top_radius = 0.205
+bottom_radius = 0.205
+height = 0.018
+radial_segments = 10
+
+[sub_resource type="StandardMaterial3D" id="WoodEnd"]
+albedo_color = Color(0.62, 0.43, 0.23, 1)
+roughness = 1.0
+
+[node name="WoodLog" type="RigidBody3D"]
+script = ExtResource("1_log")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+rotation = Vector3(1.5707963, 0, 0)
+shape = SubResource("LogCollision")
+
+[node name="Bark" type="MeshInstance3D" parent="."]
+rotation = Vector3(1.5707963, 0, 0)
+mesh = SubResource("LogMesh")
+material_override = SubResource("Bark")
+
+[node name="CutEndA" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0, -0.83)
+rotation = Vector3(1.5707963, 0, 0)
+mesh = SubResource("CutFace")
+material_override = SubResource("WoodEnd")
+
+[node name="CutEndB" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0, 0.83)
+rotation = Vector3(1.5707963, 0, 0)
+mesh = SubResource("CutFace")
+material_override = SubResource("WoodEnd")

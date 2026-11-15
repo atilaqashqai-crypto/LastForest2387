@@ -1,0 +1,85 @@
+[gd_scene format=3 uid="uid://dsgwafhwym54r"]
+
+[ext_resource type="Script" uid="uid://djgvbjrcacfpc" path="res://main.gd" id="1_0xm2m"]
+[ext_resource type="PackedScene" uid="uid://bmgrffoui81gw" path="res://player.tscn" id="1_ig7tw"]
+[ext_resource type="Script" uid="uid://bvj8q1riil4p8" path="res://inventory.gd" id="3_dg77c"]
+[ext_resource type="Script" uid="uid://dov6ugcm7ifj1" path="res://forest.gd" id="3_h2yge"]
+[ext_resource type="Script" uid="uid://c4cm17opefgye" path="res://cabin.gd" id="4_1bvp3"]
+[ext_resource type="Script" uid="uid://bcho3s2ad0xdo" path="res://combat.gd" id="4_ycdy4"]
+[ext_resource type="Script" uid="uid://2q1dj3s72wja" path="res://env.gd" id="5_lquwl"]
+[ext_resource type="Script" uid="uid://ddp8jbp7mp8j2" path="res://terrain.gd" id="6_7mycd"]
+[ext_resource type="Script" uid="uid://etcykx6t0iso" path="res://props.gd" id="7_272bh"]
+[ext_resource type="Script" uid="uid://8f3cgle8ho2a" path="res://hud.gd" id="8_5vw27"]
+[ext_resource type="Script" uid="uid://btote0v5xpahq" path="res://spawner.gd" id="9_kek77"]
+[ext_resource type="Script" uid="uid://ee1832bb764h" path="res://layout.gd" id="11_ycdy4"]
+[ext_resource type="Script" uid="uid://mxxefyhfua1m" path="res://loot.gd" id="12_w48qg"]
+[ext_resource type="PackedScene" path="res://vehicle.tscn" id="13_vehicle"]
+[ext_resource type="Script" path="res://bunker.gd" id="14_bunker"]
+
+[ext_resource type="Script" path="res://city.gd" id="15_city"]
+[node name="main" type="Node3D" unique_id=489272744]
+script = ExtResource("1_0xm2m")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=2009305075]
+transform = Transform3D(1, 0, 0, 0, 0.64278764, 0.76604444, 0, -0.76604444, 0.64278764, 0, 0, 0)
+
+[node name="Player" parent="." unique_id=576448409 instance=ExtResource("1_ig7tw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+
+[node name="Inventory" type="Node" parent="Player" unique_id=65473259]
+script = ExtResource("3_dg77c")
+
+[node name="Combat" type="Node" parent="Player" unique_id=464819603]
+script = ExtResource("4_ycdy4")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=136195610]
+
+[node name="JumpButton" type="Button" parent="CanvasLayer" unique_id=2139292553]
+offset_left = -21.0
+offset_right = 40.0
+offset_bottom = 31.0
+text = "Jump"
+
+[node name="Forest" type="Node3D" parent="." unique_id=1645272309]
+script = ExtResource("3_h2yge")
+
+[node name="Cabin" type="Node3D" parent="." unique_id=1491794553]
+script = ExtResource("4_1bvp3")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=124535250]
+script = ExtResource("5_lquwl")
+
+[node name="Terrain" type="MeshInstance3D" parent="." unique_id=1002658037]
+script = ExtResource("6_7mycd")
+
+[node name="Props" type="Node3D" parent="." unique_id=1791260284]
+script = ExtResource("7_272bh")
+
+[node name="HUD" type="CanvasLayer" parent="." unique_id=982763899]
+script = ExtResource("8_5vw27")
+
+[node name="Spawner" type="Node" parent="." unique_id=1713964223]
+script = ExtResource("9_kek77")
+
+[node name="Layout" type="Node" parent="Spawner" unique_id=1161225136]
+script = ExtResource("11_ycdy4")
+
+[node name="Loot" type="Node3D" parent="." unique_id=116540105]
+script = ExtResource("12_w48qg")
+
+[node name="RedOffroadPatrol" parent="." instance=ExtResource("13_vehicle")]
+position = Vector3(4, 2.5, -5)
+paint_color = Color(0.72, 0.025, 0.025, 1)
+
+[node name="BlackOffroadPatrol" parent="." instance=ExtResource("13_vehicle")]
+position = Vector3(-38, 3.5, 42)
+paint_color = Color(0.04, 0.04, 0.045, 1)
+
+[node name="BlueOffroadPatrol" parent="." instance=ExtResource("13_vehicle")]
+position = Vector3(55, 3.5, -48)
+paint_color = Color(0.08, 0.22, 0.55, 1)
+
+[node name="NuclearBunker" type="Node3D" parent="."]
+script = ExtResource("14_bunker")
+[node name="City" type="Node3D" parent="."]
+script = ExtResource("15_city")

@@ -1,0 +1,42 @@
+v34 - vehicles online, PvP, new zombie respawn
+==============================================
+VEHICLES (vehicle.gd)
+- The SERVER runs the car physics. Clients show a frozen copy that follows the
+  server's snapshots (20/s), so every player sees the same car in the same place.
+- The driver's phone only sends steering/throttle to the server.
+- 4 seats: driver, front passenger, 2 standing in the cargo bed. Enter/Exit button
+  puts you in the first free seat. Players in the bed can shoot.
+- Server checks range and free seat before letting someone in. Seats are freed if
+  a rider disconnects. Logs on the bed are shared by everybody.
+- Zombies are run over by the server's car.
+
+PVP (network.gd, combat.gd)
+- Your bullets/knife can hit other players. Server validates range + fire rate.
+- Damage = weapon damage x 0.5 (PVP_DAMAGE_MULT in network.gd).
+- 3 seconds spawn protection after respawn. Red flash when you are shot.
+- Kill feed ("A killed B" / "B died") on everybody's screen.
+- Turn it off on the server with:  ./LastForestServer --headless --server --no-pvp
+
+ZOMBIES (spawner.gd)
+- Home zombies are spread over the whole map. A killed zombie returns after 60-120 s,
+  at its own home, and only if no player is within 80 m or looking at that spot.
+- Ambient wanderers: if you have fewer than 4 zombies within 100 m, one slowly
+  appears from behind you / out of sight every ~15 s. They are removed when left far
+  behind and never respawn.
+- Population cap grows with player count (44 + 8 per extra player, max 90).
+- All numbers are constants at the top of spawner.gd.
+
+FIXES
+- HUD now always shows YOUR health/food/water online (it could show another player's).
+- Landscape orientation is forced on Android.
+
+CITY / MAP (city.gd) + VEHICLE LOOK
+- Players sitting in the cab (driver / front seat) are hidden; riders in the bed stay visible.
+- Every ordinary city building now has a furnished SECOND FLOOR (5 variants: bedrooms,
+  office, archive, survivor camp, apartment), ceiling lamps, baseboards, dim lights,
+  railings around the stairwell, and 1-2 loot items upstairs.
+- Old restaurant rebuilt as "Mel's Diner": checker floor, front windows and doorway,
+  counter + stools, booths, kitchen, jukebox, collapsed front-right corner, neon sign.
+- GAS STATION: the shop booth was a solid block (weapons were stuck inside the wall and
+  unreachable). It is hollow now with a door, counter, shelves and a weapon rack.
+  Loot: 3 pistols, 2 shotguns, 2 AKs and ammo for all three (+ some outside by the pumps).

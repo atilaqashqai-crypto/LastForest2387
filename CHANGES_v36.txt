@@ -1,0 +1,6 @@
+v36 - automatic server build on GitHub
+======================================
+- Added export_presets.cfg (preset "Linux Server").
+- Added .github/workflows/build-server.yml: every push to GitHub builds the Linux server with
+  Godot 4.7.1 and publishes it as release "server-latest" (file LastForestServer.x86_64).
+- No game code changed.

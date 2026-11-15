@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://bmgrffoui81gw"]
+
+[ext_resource type="Script" uid="uid://boii18tsp4wme" path="res://player.gd" id="1_4flbx"]
+[ext_resource type="Script" uid="uid://dsgwmrny317om" path="res://voxel_character.gd" id="2_onrkg"]
+[ext_resource type="Script" uid="uid://bvtevaqubj6f" path="res://stats.gd" id="3_i3pqv"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_g7b7a"]
+
+[node name="Player" type="CharacterBody3D" unique_id=576448409]
+script = ExtResource("1_4flbx")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1967807311]
+shape = SubResource("CapsuleShape3D_g7b7a")
+
+[node name="CameraPivot" type="Node3D" parent="." unique_id=11662501]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+
+[node name="SpringArm3D" type="SpringArm3D" parent="CameraPivot" unique_id=629154036]
+spring_length = 4.0
+
+[node name="Camera3D" type="Camera3D" parent="CameraPivot/SpringArm3D" unique_id=815273842]
+
+[node name="CharacterVisual" type="Node3D" parent="." unique_id=773265917]
+script = ExtResource("2_onrkg")
+
+[node name="Stats" type="Node" parent="." unique_id=583528593]
+script = ExtResource("3_i3pqv")
