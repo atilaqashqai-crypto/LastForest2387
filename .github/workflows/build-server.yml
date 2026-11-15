@@ -1,0 +1,48 @@
+name: Build Linux Server
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+env:
+  GODOT_VERSION: "4.7.1"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Godot and export templates
+        run: |
+          V="${GODOT_VERSION}-stable"
+          BASE="https://github.com/godotengine/godot/releases/download/${V}"
+          wget -q "${BASE}/Godot_v${V}_linux.x86_64.zip"
+          wget -q "${BASE}/Godot_v${V}_export_templates.tpz"
+          unzip -q "Godot_v${V}_linux.x86_64.zip"
+          sudo mv "Godot_v${V}_linux.x86_64" /usr/local/bin/godot
+          sudo chmod +x /usr/local/bin/godot
+          mkdir -p ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
+          unzip -q "Godot_v${V}_export_templates.tpz" -d tpz
+          mv tpz/templates/* ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable/
+
+      - name: Import project
+        run: godot --headless --path . --import || true
+
+      - name: Export Linux server
+        run: |
+          mkdir -p build
+          godot --headless --path . --export-release "Linux Server" build/LastForestServer.x86_64
+          ls -la build
+
+      - name: Publish release "server-latest"
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release delete server-latest -y --cleanup-tag || true
+          gh release create server-latest build/LastForestServer.x86_64 \
+            --title "Server (latest)" --notes "Linux dedicated server build"
